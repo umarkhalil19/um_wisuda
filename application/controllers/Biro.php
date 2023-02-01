@@ -254,7 +254,8 @@ class Biro extends CI_Controller
 		$kodeprodi = substr($id, 6);
 		$data['thn'] = $thn;
 		$data['kodeprodi'] = $kodeprodi;
-		$data['alumni'] = $this->db->get_where('tbl_alumni', ['mhs_sesi_wisuda' => $thn]);
+		// $data['alumni'] = $this->db->get_where('tbl_alumni', ['mhs_sesi_wisuda' => $thn]);
+		$data['alumni'] = $this->db->query("SELECT * FROM tbl_alumni WHERE mhs_no_wisuda = '' AND mhs_sesi_wisuda=$thn");
 		$data['sesi'] = $this->db->get_where('tbl_jadwalwisuda', ['jadwal_id' => $thn])->row();
 		$data['prodi'] = $this->db->get_where('tbl_prodi', ['prodi_kode' => $kodeprodi])->row();
 		$data['mhsLampiran'] = [];
@@ -291,18 +292,50 @@ class Biro extends CI_Controller
 		$this->load->view('biro/v_footer');
 	}
 
-	public function arrayTest()
+	// public function arrayTest()
+	// {
+	// 	$arrayNim = ['150170043', '227110201011'];
+	// 	$lampiran = [
+	// 		'150170043' => [
+	// 			'lampiran_nama' => 'test'
+	// 		],
+	// 	];
+	// 	foreach ($arrayNim as $a) {
+	// 		echo "<pre>";
+	// 		print_r($lampiran[$a]['lampiran_nama']);
+	// 		echo "</pre>";
+	// 	}
+	// }
+
+	public function verPesertaWisuda()
 	{
-		$arrayNim = ['150170043', '227110201011'];
-		$lampiran = [
-			'150170043' => [
-				'lampiran_nama' => 'test'
-			],
+		$nim = $this->input->post('nim');
+		$jadwal = $this->input->post('jadwal');
+		$prodi = $this->input->post('prodi');
+		$update = [
+			'mhs_no_wisuda' => nomorWisuda($jadwal, $prodi),
 		];
-		foreach ($arrayNim as $a) {
-			echo "<pre>";
-			print_r($lampiran[$a]['lampiran_nama']);
-			echo "</pre>";
+		$where = [
+			'mhs_nim' => $nim
+		];
+		$this->db->update('tbl_alumni', $update, $where);
+		redirect("biro/wisuda_ver_tampil/$jadwal$prodi?alert=user-verifikasi");
+	}
+
+	public function batalkanPesertaWisuda($id = 0)
+	{
+		if ($id == 0) {
+			redirect('biro');
+		} else {
+			$redirect = $this->db->select('mhs_prodi,mhs_sesi_wisuda')
+				->from('tbl_alumni')
+				->where(['mhs_nim' => $id])
+				->get()
+				->row();
+			$prodi = $redirect->mhs_prodi;
+			$jadwal = $redirect->mhs_sesi_wisuda;
+			$this->db->delete('tbl_alumni', ['mhs_nim' => $id]);
+			redirect("biro/wisuda_ver_tampil/$jadwal$prodi?alert=batal-peserta-wisuda");
 		}
 	}
 

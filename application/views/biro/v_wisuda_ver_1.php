@@ -66,13 +66,13 @@
                     ?>
                   </td>
                   <td>
-                    <?php
-                    echo '<a class="btn btn-sm btn-outline-success" href="' . base_url() . 'biro/wisuda_ver_oke/' . $kodeprodi . $thn . '" title="Verifikasi Berkas"><span class="fa fa-check"></span>Verifikasi</a>';
-
-                    // 
-                    ?>
-                    <!-- <br><br>
-                      <a class="btn btn-sm btn-outline-success" href="<?php echo base_url() . 'biro/peserta_detail/' . $u->peserta_kode ?>" title="Lihat Data"><span class="fa fa-search"></span> Lihat </a>-->
+                    <form action="<?= base_url('biro/verPesertaWisuda') ?>" method="post">
+                      <input type="hidden" name="nim" value="<?= $u->mhs_nim ?>">
+                      <input type="hidden" name="prodi" value="<?= $u->mhs_prodi ?>">
+                      <input type="hidden" name="jadwal" value="<?= $sesi->jadwal_id ?>">
+                      <button class="btn btn-sm btn-outline-primary" type="submit"><span class="fa fa-check"></span>Verifikasi</button><br>
+                      <a href="<?= base_url("biro/batalkanPesertaWisuda/$u->mhs_nim") ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Batalkan pendaftaran ini? pastikan anda sudah mengirimkan pesan alasan membatalkan pendaftaran!!')"><span class="fa fa-trash"></span> Batalkan</a>
+                    </form>
                   </td>
                   <td>
                     <form method="post" action="<?php echo base_url() . 'biro/peserta_pesan_ver/' ?>">

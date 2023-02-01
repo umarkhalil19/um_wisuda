@@ -488,7 +488,8 @@ class wisuda extends CI_Controller
 		$nim = $id;
 		$thn = date('Y');
 		$kodeprodi = $prodi;
-		$sesi_wisuda = $this->input->post('sesi_wisuda');
+		$sesi_wisuda = '202301';
+		// $sesi_wisuda = $this->input->post('sesi_wisuda');
 		// Cek apakah SK Yudisium sudah diinput oleh admin Biro
 		$data_mhs = $this->db->query("SELECT * FROM tbl_mahasiswa WHERE mhs_nim = '$nim' AND mhs_nosk_yudisium != ''")->num_rows();
 		if ($data_mhs > 0) {
@@ -501,14 +502,14 @@ class wisuda extends CI_Controller
 				foreach ($sesi_1 as $s) {
 					$tgl_wisuda = $s->jadwal_tanggal;
 				}
-				$read = mysqli_query($db, "SELECT SUBSTR(mhs_no_wisuda, 1, 3) FROM tbl_alumni WHERE mhs_prodi = '" . $kodeprodi . "' AND mhs_sesi_wisuda = '" . $sesi_wisuda . "' ORDER BY SUBSTR(mhs_no_wisuda, 1, 3) DESC");
-				$auto = '0101';
-				if ($rec = mysqli_fetch_array($read)) {
-					$auto = $rec[0] + 1;
-					if ($auto < 10) $auto = "0" . $auto;
-					if ($auto < 100) $auto = "0" . $auto;
-				}
-				$no_wisuda = $auto . '/' . $thn;
+				// $read = mysqli_query($db, "SELECT SUBSTR(mhs_no_wisuda, 1, 3) FROM tbl_alumni WHERE mhs_prodi = '" . $kodeprodi . "' AND mhs_sesi_wisuda = '" . $sesi_wisuda . "' ORDER BY SUBSTR(mhs_no_wisuda, 1, 3) DESC");
+				// $auto = '0101';
+				// if ($rec = mysqli_fetch_array($read)) {
+				// 	$auto = $rec[0] + 1;
+				// 	if ($auto < 10) $auto = "0" . $auto;
+				// 	if ($auto < 100) $auto = "0" . $auto;
+				// }
+				// $no_wisuda = $auto . '/' . $thn;
 				//echo $no_wisuda;
 				foreach ($peserta as $p) {
 					$thn_lulus = substr($p->peserta_tanggal_sidang, 0, 4);
@@ -559,18 +560,18 @@ class wisuda extends CI_Controller
 		}
 	}
 
-	function daftarwisuda_cancel()
-	{
-		$this->load->database();
-		$db = $this->M_vic->panggil_db();
-		$id = $this->session->userdata('uid');
-		if ($id == "") {
-			redirect('wisuda/index');
-		} else {
-			$this->db->query("DELETE FROM tbl_alumni WHERE mhs_nim = '$id'");
-			redirect('wisuda/daftarwisuda');
-		}
-	}
+	// function daftarwisuda_cancel()
+	// {
+	// 	$this->load->database();
+	// 	$db = $this->M_vic->panggil_db();
+	// 	$id = $this->session->userdata('uid');
+	// 	if ($id == "") {
+	// 		redirect('wisuda/index');
+	// 	} else {
+	// 		$this->db->query("DELETE FROM tbl_alumni WHERE mhs_nim = '$id'");
+	// 		redirect('wisuda/daftarwisuda');
+	// 	}
+	// }
 
 	function daftarwisuda_cetak()
 	{

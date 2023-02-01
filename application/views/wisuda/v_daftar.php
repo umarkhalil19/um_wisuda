@@ -98,8 +98,6 @@
 					<br>
 					<H3>Anda Telah Berhasil Mendaftar. Admin akan melakukan verifikasi berkas anda.</H3>
 					Nomor Peserta Anda: Akan muncul setelah verifikasi berkas oleh admin
-					<br>	
-					<a class="btn btn-danger pull-right" href="' . base_url() . 'wisuda/daftarwisuda_cancel"><i class="fa fa-times-circle""></i> Batalkan </a>
 					<br>
 					<br>
 				</div></div></div>';

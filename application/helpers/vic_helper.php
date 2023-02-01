@@ -60,6 +60,8 @@ function show_alert()
 			echo "<div class='alert alert-success alert-dah'>Verifikasi Berhasil.<span class='glyphicon glyphicon-remove pull-right btn-hide-alert'></span></div>";
 		} else if ($alert == "no_sk_yudisium") {
 			echo "<div class='alert alert-danger' role='alert'>Tidak dapat mendaftar, anda belum memiliki SK Yudisium</div>";
+		} else if ($alert == "batal-peserta-wisuda") {
+			echo "<div class='alert alert-success' role='alert'>Pendaftaran berhasil di batalkan</div>";
 		}
 	}
 }
@@ -228,4 +230,25 @@ function hariIndo($date)
 	//echo "Tanggal {$tanggal} adalah hari : " . $dayList[$day];
 	$result = $dayList[$day];
 	return ($result);
+}
+
+function nomorWisuda($jadwal, $prodi)
+{
+	$ci = &get_instance();
+	$ci->load->database();
+	// $nimMhs = $nim;
+	$jadwalWisuda = $jadwal;
+	$tahun = substr($jadwal, 0, 4);
+	$prodiMhs = $prodi;
+	$noUrut = '0101';
+	$query = "SELECT SUBSTR(mhs_no_wisuda, 2, 3) as noUrut FROM tbl_alumni WHERE mhs_prodi = '" . $prodiMhs . "' AND mhs_sesi_wisuda = '" . $jadwalWisuda . "' ORDER BY SUBSTR(mhs_no_wisuda, 2, 3) DESC LIMIT 1";
+	$cek = $ci->db->query($query)->row();
+	if (empty($cek->noUrut)) {
+		$noUrut = $noUrut . '/' . $tahun;
+	} else {
+		$noUrut = ((int)$cek->noUrut) + 1;
+		$noUrut = str_pad($noUrut, 4, '0', STR_PAD_LEFT);
+		$noUrut = $noUrut . '/' . $tahun;
+	}
+	return $noUrut;
 }
