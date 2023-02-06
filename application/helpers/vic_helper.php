@@ -240,8 +240,8 @@ function nomorWisuda($jadwal, $prodi)
 	$jadwalWisuda = $jadwal;
 	$tahun = substr($jadwal, 0, 4);
 	$prodiMhs = $prodi;
-	$noUrut = '0101';
-	$query = "SELECT SUBSTR(mhs_no_wisuda, 2, 3) as noUrut FROM tbl_alumni WHERE mhs_prodi = '" . $prodiMhs . "' AND mhs_sesi_wisuda = '" . $jadwalWisuda . "' ORDER BY SUBSTR(mhs_no_wisuda, 2, 3) DESC LIMIT 1";
+	$noUrut = '0001';
+	$query = "SELECT SUBSTR(mhs_no_wisuda, 1, 4) as noUrut FROM tbl_alumni WHERE mhs_prodi = '" . $prodiMhs . "' AND mhs_sesi_wisuda = '" . $jadwalWisuda . "' ORDER BY SUBSTR(mhs_no_wisuda, 1, 4) DESC LIMIT 1";
 	$cek = $ci->db->query($query)->row();
 	if (empty($cek->noUrut)) {
 		$noUrut = $noUrut . '/' . $tahun;
