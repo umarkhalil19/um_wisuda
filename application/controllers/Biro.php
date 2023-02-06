@@ -255,7 +255,7 @@ class Biro extends CI_Controller
 		$data['thn'] = $thn;
 		$data['kodeprodi'] = $kodeprodi;
 		// $data['alumni'] = $this->db->get_where('tbl_alumni', ['mhs_sesi_wisuda' => $thn]);
-		$data['alumni'] = $this->db->query("SELECT * FROM tbl_alumni WHERE mhs_no_wisuda = '' AND mhs_sesi_wisuda=$thn");
+		$data['alumni'] = $this->db->query("SELECT * FROM tbl_alumni WHERE mhs_no_wisuda = '' AND mhs_prodi=$kodeprodi AND mhs_sesi_wisuda=$thn");
 		$data['sesi'] = $this->db->get_where('tbl_jadwalwisuda', ['jadwal_id' => $thn])->row();
 		$data['prodi'] = $this->db->get_where('tbl_prodi', ['prodi_kode' => $kodeprodi])->row();
 		$data['mhsLampiran'] = [];
