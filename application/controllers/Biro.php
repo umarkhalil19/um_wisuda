@@ -195,31 +195,37 @@ class Biro extends CI_Controller
 		$this->load->view('biro/v_footer');
 	}
 
-	function wisuda_peserta($id)
+	function wisuda_peserta($id = 0)
 	{
 		$this->load->database();
-		$prodi = substr($id, 0, -10);
-		$thn = substr($id, 5, -6);
-		$sesi = substr($id, 9);
+		$prodi = substr($id, 0, 5);
+		// $thn = substr($id, 5, -6);
+		$sesi = substr($id, 5);
 		if ($id == '') {
 			redirect('biro/wisuda_peserta/0');
 			//$thn = date('Y');
-			$thn = '----- Pilih -----';
+			// $thn = '----- Pilih -----';
 			$prodi = '----- Pilih -----';
 		}
-		$data['thn'] = $thn;
+		// $data['thn'] = $thn;
 		$data['prodi'] = $prodi;
 		$data['sesi'] = $sesi;
 		$data['jurusan'] = $this->M_vic->get_data('tbl_prodi')->result();
-		$th = date('Y');
-		if ($thn == '') {
-			$th = date('Y');
-		} else {
-			$th = $thn;
-		}
-		$data['sesi_wisuda'] = $this->db->query("SELECT DISTINCT * FROM tbl_jadwalwisuda WHERE jadwal_tahun = '$th' ORDER BY jadwal_id ASC ")->result();
+		// $th = date('Y');
+		// if ($thn == '') {
+		// 	$th = date('Y');
+		// } else {
+		// 	$th = $thn;
+		// }
+		// $data['sesi_wisuda'] = $this->db->query("SELECT DISTINCT * FROM tbl_jadwalwisuda WHERE jadwal_tahun = '$th' ORDER BY jadwal_id ASC ")->result();
+		$data['sesi_wisuda'] = $this->db->query("SELECT * FROM tbl_jadwalwisuda ORDER BY jadwal_id DESC")->result();
+		// $data['sesi_wisuda'] = $this->db->get('tbl_jadwalwisuda')->result();
 
-		$data['peserta'] = $this->db->query("SELECT DISTINCT * FROM tbl_alumni a, tbl_peserta p WHERE a.mhs_nim = p.peserta_kode AND YEAR(p.h_tanggal) = '$thn' AND a.mhs_prodi = '$prodi' AND a.mhs_sesi_wisuda = '$sesi' ")->result();
+		// $data['peserta'] = $this->db->query("SELECT DISTINCT * FROM tbl_alumni a, tbl_peserta p WHERE a.mhs_nim = p.peserta_kode AND YEAR(p.h_tanggal) = '$thn' AND a.mhs_prodi = '$prodi' AND a.mhs_sesi_wisuda = '$sesi' ")->result();
+		$data['peserta'] = $this->db->query("SELECT ta.mhs_no_wisuda,ta.mhs_nim,ta.mhs_nama,ta.mhs_jenis_kelamin, tp.peserta_ipk, tp.peserta_lama_studi, tp.peserta_predikat  
+		from tbl_alumni ta 
+		left join tbl_peserta tp on tp.peserta_kode = ta.mhs_nim 
+		where ta.mhs_no_wisuda != '' and ta.mhs_prodi ='$prodi' and ta.mhs_sesi_wisuda ='$sesi'")->result();
 		$this->load->view('biro/v_header');
 		$this->load->view('biro/v_wisuda_peserta', $data);
 		$this->load->view('biro/v_footer');
