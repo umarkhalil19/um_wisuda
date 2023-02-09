@@ -270,15 +270,15 @@ class Biro extends CI_Controller
 			$nimLength = strlen($a->mhs_nim);
 			if ($nimLength == 9) {
 				$query = "SELECT l.lampiran_nama, l.lampiran_format, l.lampiran_id,
-				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$a->mhs_nim') as lampiran 
+				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$a->mhs_nim' LIMIT 1) as lampiran 
 				FROM tbl_lampiran l WHERE lampiran_keperluan='wisuda' AND lampiran_status='0'";
 			} elseif ($nimLength > 9) {
 				$query = "SELECT l.lampiran_nama, l.lampiran_format, l.lampiran_id,
-				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$a->mhs_nim') as lampiran 
+				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$a->mhs_nim' LIMIT 1) as lampiran 
 				FROM tbl_lampiran l WHERE lampiran_keperluan='wisuda'";
 			} else {
 				$query = "SELECT l.lampiran_nama, l.lampiran_format, l.lampiran_id,
-				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$a->mhs_nim') as lampiran 
+				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$a->mhs_nim' LIMIT 1) as lampiran 
 				FROM tbl_lampiran l WHERE lampiran_keperluan='wisuda' AND lampiran_status='0'";
 			}
 			$lampiran = $this->db->query($query);

@@ -459,15 +459,15 @@ class wisuda extends CI_Controller
 			// $data['lampiran'] = $this->db->get_where('tbl_lampiran', ['lampiran_keperluan' => 'wisuda', 'lampiran_status' => '0']);
 			if ($nimLength == 9) {
 				$query = "SELECT l.lampiran_nama, l.lampiran_format, l.lampiran_id,
-				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$id') as lampiran 
+				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$id' LIMIT 1) as lampiran 
 				FROM tbl_lampiran l WHERE lampiran_keperluan='wisuda' AND lampiran_status='0'";
 			} elseif ($nimLength > 9) {
 				$query = "SELECT l.lampiran_nama, l.lampiran_format, l.lampiran_id,
-				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$id') as lampiran 
+				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$id' LIMIT 1) as lampiran 
 				FROM tbl_lampiran l WHERE lampiran_keperluan='wisuda'";
 			} else {
 				$query = "SELECT l.lampiran_nama, l.lampiran_format, l.lampiran_id,
-				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$id') as lampiran 
+				(SELECT peserta_lampiran FROM tbl_peserta_lampiran where peserta_lamp_kode=l.lampiran_id and peserta_kode='$id' LIMIT 1) as lampiran 
 				FROM tbl_lampiran l WHERE lampiran_keperluan='wisuda' AND lampiran_status='0'";
 			}
 			$data['lampiran'] = $this->db->query($query);
