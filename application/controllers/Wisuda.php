@@ -488,8 +488,8 @@ class wisuda extends CI_Controller
 		$nim = $id;
 		$thn = date('Y');
 		$kodeprodi = $prodi;
-		$sesi_wisuda = '202301';
-		// $sesi_wisuda = $this->input->post('sesi_wisuda');
+		// $sesi_wisuda = '202301';
+		$sesi_wisuda = $this->input->post('sesi_wisuda');
 		// Cek apakah SK Yudisium sudah diinput oleh admin Biro
 		$data_mhs = $this->db->query("SELECT * FROM tbl_mahasiswa WHERE mhs_nim = '$nim' AND mhs_nosk_yudisium != ''")->num_rows();
 		if ($data_mhs > 0) {
