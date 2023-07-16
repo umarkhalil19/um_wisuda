@@ -116,7 +116,7 @@
 					<table><tr><td>
 					<select class="form-control" name="sesi_wisuda">';
 				// while ($s2 = mysqli_fetch_array($sesi_wisuda)) {
-				echo '<option value="' . $sesi->jadwal_id . '">Angkatan: ' . $sesi->jadwal_nama . ' (' . TanggalIndo($sesi->jadwal_tanggal) . ')</option>';
+				echo '<option value="' . $sesi->jadwal_id . '">Angkatan: ' . $sesi->jadwal_nama . '</option>';
 				// }
 				echo '</select>
 								</td><td>';
