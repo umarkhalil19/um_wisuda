@@ -127,6 +127,11 @@ class Login extends CI_Controller
 
 					$status_sk = $this->db->select('mhs_nosk_yudisium')->from('tbl_mahasiswa')->where('mhs_nim', $uname)->get()->row();
 
+					if ($aktif <= 0) {
+						$this->session->set_flashdata('msgsesi', strtoupper($s1['set_keterangan']));
+						redirect(base_url() . 'login');
+					}
+
 					if ($status_sk->mhs_nosk_yudisium == '') {
 						$this->session->set_flashdata('msg', 'Tidak dapat login, anda belum memiliki Nomor SK Yudisium');
 						redirect(base_url() . 'login');
