@@ -150,7 +150,7 @@ class Login extends CI_Controller
 					$this->session->set_userdata($session);
 					redirect('wisuda');
 				} else {
-					$this->session->set_flashdata('msg', 'Tidak dapat login, anda belum memiliki Nomor SK Yudisium');
+					$this->session->set_flashdata('msg', 'Username atau Password salah!!!');
 					redirect(base_url() . 'login');
 				}
 			}
