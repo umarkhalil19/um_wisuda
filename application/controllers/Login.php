@@ -118,11 +118,11 @@ class Login extends CI_Controller
 			} else {
 				//redirect(base_url().'login');
 				$where = array(
-					'peserta_kode' => $uname,
-					'peserta_pass' => $pass,
-					'peserta_status' => 'Nonaktif'
+					'mhs_kode' => $uname,
+					'mhs_pass' => $pass,
+					'mhs_status' => 'Aktif'
 				);
-				$data = $this->M_vic->edit_data($where, 'tbl_peserta');
+				$data = $this->M_vic->edit_data($where, 'tbl_mahasiswa');
 				if ($data->num_rows() > 0) {
 
 					$status_sk = $this->db->select('mhs_nosk_yudisium')->from('tbl_mahasiswa')->where('mhs_nim', $uname)->get()->row();
@@ -139,12 +139,10 @@ class Login extends CI_Controller
 
 					$mydata = $data->row();
 					$session = array(
-						'uid' => $mydata->peserta_kode,
-						'unama' => $mydata->peserta_nama,
-						'ulahir' => $mydata->peserta_tanggal_lahir,
-						'ufak' => $mydata->peserta_fakultas,
-						'ujur' => $mydata->peserta_prodi,
-						'uver' => $mydata->peserta_status_verifikasi,
+						'uid' => $mydata->mhs_nim,
+						'unama' => $mydata->mhs_nama,
+						'ufak' => $mydata->mhs_fakultas,
+						'ujur' => $mydata->mhs_prodi,
 						'status' => 'mhs'
 					);
 					$this->session->set_userdata($session);
