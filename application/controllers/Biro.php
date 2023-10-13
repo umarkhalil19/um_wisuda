@@ -1072,17 +1072,17 @@ class Biro extends CI_Controller
 	function peserta_reset_pass($id)
 	{
 		$db = $this->M_vic->panggil_db();
-		$idinternal = substr($id, 3, -4);
-		$prodi = mysqli_query($db, "SELECT prodi_kode FROM tbl_prodi WHERE prodi_kode_internal = '$idinternal'");
-		$p = mysqli_fetch_array($prodi);
-		$mhs = mysqli_query($db, "SELECT peserta_tanggal_lahir FROM tbl_peserta WHERE peserta_kode = '$id'");
-		$m = mysqli_fetch_array($mhs);
+		//$mhs = mysqli_query($db, "SELECT mhs_tanggal_lahir, mhs_prodi, mhs_tahun_masuk FROM tbl_mahasiswa WHERE mhs_kode = '$id'");
+		//$m = mysqli_fetch_array($mhs);
 
-		$where = array('peserta_kode' => $id);
-		$data = array('peserta_pass' => md5($id));
-		$this->M_vic->update_data($where, $data, 'tbl_peserta');
-		//redirect('biro/peserta/?alert=reset-pass');
-		redirect('biro/peserta/' . $p[0] . '/?alert=reset-pass');
+		$where = array('mhs_kode' => $id);
+		$data = array('mhs_pass' => md5($id));
+		//var_dump($id);
+		//die;
+		$this->db->update('tbl_mahasiswa', $data, $where);
+		//$this->M_vic->update_data($where,$data,'tbl_mahasiswa');
+		redirect('biro/peserta/0?alert=reset-pass');
+		//redirect('biro/peserta/'.$m[1].$m[2].'/?alert=reset-pass')
 	}
 
 	function peserta_cek_list($id)
