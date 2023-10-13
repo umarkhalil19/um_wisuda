@@ -120,7 +120,7 @@ class Login extends CI_Controller
 				$where = array(
 					'mhs_kode' => $uname,
 					'mhs_pass' => $pass,
-					'mhs_status' => 'Aktif'
+					// 'mhs_status' => 'Aktif'
 				);
 				$data = $this->M_vic->edit_data($where, 'tbl_mahasiswa');
 				if ($data->num_rows() > 0) {
