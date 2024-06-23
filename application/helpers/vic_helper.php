@@ -62,6 +62,8 @@ function show_alert()
 			echo "<div class='alert alert-danger' role='alert'>Tidak dapat mendaftar, anda belum memiliki SK Yudisium</div>";
 		} else if ($alert == "batal-peserta-wisuda") {
 			echo "<div class='alert alert-success' role='alert'>Pendaftaran berhasil di batalkan</div>";
+		} else if ($alert == "biodata") {
+			echo "<div class='alert alert-danger' role='alert'>Tidak bisa mendaftar wisuda, Lengkapi Biodata pada sistem ijazah terlebih dahulu</div>";
 		}
 	}
 }

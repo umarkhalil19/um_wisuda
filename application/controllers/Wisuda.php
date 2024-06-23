@@ -473,6 +473,10 @@ class wisuda extends CI_Controller
 			$data['lampiran'] = $this->db->query($query);
 			$data['sesi'] = $this->db->select('*')->from('tbl_jadwalwisuda')->order_by('jadwal_id', 'DESC')->limit(1)->get()->row();
 			$data['alumni'] = $this->db->get_where('tbl_alumni', ['mhs_nim' => $id])->row();
+			$cek = $this->db->get_where('tbl_mahasiswa', ['mhs_nim' => $id])->row();
+			if ($cek->mhs_telepon == '' || $cek->mhs_email == '' || $cek->mhs_ayah == '' || $cek->mhs_ibu == '' || $cek->mhs_bin == '') {
+				redirect(base_url() . 'wisuda/?alert=biodata');
+			}
 			$this->load->view('wisuda/v_header', $data);
 			$this->load->view('wisuda/v_daftar', $data);
 			$this->load->view('wisuda/v_footer');
@@ -496,7 +500,7 @@ class wisuda extends CI_Controller
 			if ($id == "") {
 				redirect('wisuda/index');
 			} else {
-				$peserta = $this->db->query("SELECT DISTINCT * FROM tbl_peserta p WHERE p.peserta_kode = '$nim' ")->result();
+				$peserta = $this->db->query("SELECT DISTINCT * FROM tbl_mahasiswa m WHERE m.mhs_nim = '$nim' ")->result();
 				$sesi_1 = $this->db->query("SELECT DISTINCT * FROM tbl_jadwalwisuda WHERE jadwal_id = '$sesi_wisuda' ")->result();
 				$tgl_wisuda = '';
 				foreach ($sesi_1 as $s) {
@@ -512,40 +516,40 @@ class wisuda extends CI_Controller
 				// $no_wisuda = $auto . '/' . $thn;
 				//echo $no_wisuda;
 				foreach ($peserta as $p) {
-					$thn_lulus = substr($p->peserta_tanggal_sidang, 0, 4);
+					$thn_lulus = substr($p->mhs_tanggal_sidang, 0, 4);
 					$d2 = array(
 						'mhs_nim' => $nim,
 						// 'mhs_no_wisuda' => $no_wisuda,
-						'mhs_nama' => $p->peserta_nama,
-						'mhs_no_ktp' => $p->peserta_no_ktp,
-						'mhs_no_kk' => $p->peserta_no_kk,
-						'mhs_fakultas' => $p->peserta_fakultas,
-						'mhs_prodi' => $p->peserta_prodi,
-						'mhs_jenis_kelamin' => $p->peserta_jenis_kelamin,
-						'mhs_tempat_lahir' => $p->peserta_tempat_lahir,
-						'mhs_tanggal_lahir' => $p->peserta_tanggal_lahir,
-						'mhs_provinsi' => $p->peserta_provinsi,
-						'mhs_kabupaten' => $p->peserta_kabupaten,
-						'mhs_kecamatan' => $p->peserta_kecamatan,
-						'mhs_alamat' => $p->peserta_alamat,
-						'mhs_telepon' => $p->peserta_telepon,
-						'mhs_email' => $p->peserta_email,
-						'mhs_agama' => $p->peserta_agama,
+						'mhs_nama' => $p->mhs_nama,
+						'mhs_no_ktp' => $p->mhs_no_ktp,
+						'mhs_no_kk' => $p->mhs_no_kk,
+						'mhs_fakultas' => $p->mhs_fakultas,
+						'mhs_prodi' => $p->mhs_prodi,
+						'mhs_jenis_kelamin' => $p->mhs_jenis_kelamin,
+						'mhs_tempat_lahir' => $p->mhs_tempat_lahir,
+						'mhs_tanggal_lahir' => $p->mhs_tanggal_lahir,
+						'mhs_provinsi' => $p->mhs_provinsi,
+						'mhs_kabupaten' => $p->mhs_kabupaten,
+						'mhs_kecamatan' => $p->mhs_kecamatan,
+						'mhs_alamat' => $p->mhs_alamat,
+						'mhs_telepon' => $p->mhs_telepon,
+						'mhs_email' => $p->mhs_email,
+						'mhs_agama' => $p->mhs_agama,
 						'mhs_tahun_lulus' => $thn_lulus,
-						'mhs_jalur_masuk' => $p->peserta_jalur_masuk,
-						'mhs_ayah' => $p->peserta_ayah,
-						'mhs_ibu' => $p->peserta_ibu,
-						'mhs_foto' => $p->peserta_foto,
-						'mhs_kategori' => $p->peserta_kategori,
-						'mhs_pass' => $p->peserta_pass,
+						'mhs_jalur_masuk' => $p->mhs_jalur_masuk,
+						'mhs_ayah' => $p->mhs_ayah,
+						'mhs_ibu' => $p->mhs_ibu,
+						'mhs_foto' => $p->mhs_foto,
+						'mhs_kategori' => $p->mhs_kategori,
+						'mhs_pass' => $p->mhs_pass,
 						'mhs_status' => 'Lulus',
-						'mhs_no_ijazah' => $p->peserta_nomor_ijazah,
+						'mhs_no_ijazah' => $p->mhs_nomor_ijazah,
 						'mhs_tanggal_wisuda' => $tgl_wisuda,
 						'mhs_sesi_wisuda' => $sesi_wisuda,
-						'mhs_lampiran1' => $p->peserta_lampiran1,
-						'mhs_lampiran2' => $p->peserta_lampiran2,
-						'mhs_lampiran3' => $p->peserta_lampiran3,
-						'mhs_pekerjaan' => $p->peserta_no_ijazah,
+						'mhs_lampiran1' => $p->mhs_lampiran1,
+						'mhs_lampiran2' => $p->mhs_lampiran2,
+						'mhs_lampiran3' => $p->mhs_lampiran3,
+						'mhs_pekerjaan' => $p->mhs_no_ijazah,
 						'h_pengguna' => $this->session->userdata('uid'),
 						'h_tanggal' => date('Y-m-d'),
 						'h_waktu' => date("h:i:sa")
