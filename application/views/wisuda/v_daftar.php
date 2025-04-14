@@ -78,6 +78,17 @@
 			</div>
 		</div>
 	</div>
+	<div class="alert alert-warning">
+		<strong>Perhatian:</strong><br>
+		Dengan mengklik tombol <strong>"Daftar"</strong>, Anda dianggap telah membaca dan menyetujui ketentuan berikut terkait peminjaman toga wisuda:
+		<ol class="mt-2">
+			<li>Toga hanya dapat dipinjam dan dikembalikan sesuai dengan jadwal yang telah ditentukan oleh panitia wisuda.</li>
+			<li>Setiap peminjaman toga dikenakan uang jaminan, yang akan dikembalikan apabila toga dikembalikan tepat waktu dan dalam kondisi baik.</li>
+			<li>Jika toga tidak dikembalikan hingga batas waktu yang telah ditentukan, maka uang jaminan <strong>tidak dapat dikembalikan</strong>.</li>
+			<li>Toga harus dijaga kebersihannya dan tidak boleh rusak; apabila terdapat kerusakan atau kehilangan, peminjam wajib mengganti sesuai ketentuan.</li>
+			<li>Peminjam wajib menunjukkan bukti pembayaran dan identitas saat mengambil maupun mengembalikan toga.</li>
+		</ol>
+	</div>
 	<div class="row">
 		<?php
 		if (!empty($alumni)) {
@@ -138,4 +149,5 @@
 
 		?>
 	</div>
+
 </main>

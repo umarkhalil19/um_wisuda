@@ -51,7 +51,8 @@ header("content-disposition: attachment;filename=formbiodatawisuda.xls");
 	<?php
 	$no = 1;
 	//$peserta = $this->db->query("SELECT * FROM v_alumni_wisuda WHERE mhs_sesi_wisuda = '$sesi' ORDER BY mhs_fakultas ASC, mhs_prodi ASC, mhs_nim ASC ")->result();
-	$peserta = $this->db->query("SELECT DISTINCT * FROM tbl_alumni a, tbl_peserta p WHERE a.mhs_nim = p.peserta_kode AND a.mhs_sesi_wisuda = '$sesi' ORDER BY mhs_prodi ASC, mhs_jenis_kelamin ASC, mhs_no_wisuda ASC ")->result();
+	// $peserta = $this->db->query("SELECT DISTINCT * FROM tbl_mahasiswa a, tbl_peserta p, tbl_mahasiswa b WHERE a.mhs_nim = p.peserta_kode AND a.mhs_sesi_wisuda = '$sesi' ORDER BY mhs_prodi ASC, mhs_jenis_kelamin ASC, mhs_no_wisuda ASC ")->result();
+	$peserta = $this->db->query("SELECT tbl_alumni.*, tbl_peserta.*, tbl_mahasiswa.mhs_no_rekening, tbl_mahasiswa.mhs_nama_bank, tbl_mahasiswa.mhs_pemilik_rekening FROM tbl_alumni LEFT JOIN tbl_peserta ON tbl_alumni.mhs_nim=tbl_peserta.peserta_kode LEFT JOIN tbl_mahasiswa ON tbl_alumni.mhs_nim=tbl_mahasiswa.mhs_nim WHERE tbl_alumni.mhs_sesi_wisuda=$sesi ORDER BY mhs_prodi ASC, mhs_jenis_kelamin ASC, mhs_no_wisuda ASC")->result();
 	/*$peserta = $this->db->query("SELECT a.mhs_nim, a.mhs_nama, b.peserta_jenis_kelamin, b.peserta_bin, a.mhs_fakultas, a.mhs_prodi, a.mhs_tempat_lahir, a.mhs_tanggal_lahir, a.mhs_telepon, a.mhs_alamat, b.peserta_tanggal_masuk, b.peserta_tanggal_keluar, b.peserta_lama_studi, b.peserta_ipk, b.peserta_predikat, b.peserta_sekolah_asal, b.peserta_ayah, b.peserta_judul_skripsi, c.prodi_nama, a.mhs_sesi_wisuda
 		FROM tbl_alumni a, tbl_peserta b, tbl_prodi c
 		WHERE a.mhs_nim = b.peserta_kode  AND c.prodi_kode = a.mhs_prodi AND a.mhs_sesi_wisuda = '$sesi'
