@@ -102,7 +102,7 @@ header("content-disposition: attachment;filename=formbiodatawisuda.xls");
 				<td align="left" valign="top">' . ucwords(strtolower($p->peserta_judul_skripsi)) . '</td>
 				<td align="left" valign="top">' . strtoupper($j[0]) . '</td>
 				<td align="left" valign="top">' . strtoupper($p->peserta_sekolah_asal) . '</td>
-				<td align="left" valign="top">' . $p->mhs_pemilik_rekening . '</td>
+				<td align="left" valign="top">' . "'" . $p->mhs_pemilik_rekening . '</td>
 				<td align="left" valign="top">' . $p->mhs_no_rekening . '</td>
 				<td align="left" valign="top">' . $p->mhs_nama_bank . '</td>
 					</tr>';
